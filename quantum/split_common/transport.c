@@ -54,6 +54,9 @@ typedef struct _I2C_slave_buffer_t {
 #    ifdef WPM_ENABLE
     uint8_t current_wpm;
 #    endif
+#   ifdef SPLIT_LAYERS_ENABLE
+    layer_state_t layer_state;
+#endif
 } I2C_slave_buffer_t;
 
 static I2C_slave_buffer_t *const i2c_buffer = (I2C_slave_buffer_t *)i2c_slave_reg;
@@ -68,6 +71,7 @@ static I2C_slave_buffer_t *const i2c_buffer = (I2C_slave_buffer_t *)i2c_slave_re
 #    define I2C_RGB_START offsetof(I2C_slave_buffer_t, rgblight_sync)
 #    define I2C_ENCODER_START offsetof(I2C_slave_buffer_t, encoder_state)
 #    define I2C_WPM_START offsetof(I2C_slave_buffer_t, current_wpm)
+#    define I2C_LAYER_STATE_START offsetof(I2C_slave_buffer_t, layer_state)
 
 #    define TIMEOUT 100
 
@@ -117,8 +121,11 @@ bool transport_master(matrix_row_t master_matrix[], matrix_row_t slave_matrix[])
 #    endif
 
 #    ifdef SPLIT_MODS_ENABLE
+print("split enabled\n");
     uint8_t real_mods = get_mods();
     if (real_mods != i2c_buffer->real_mods) {
+        print("send mods\n");
+    uprintf("mods: %d\n", real_mods);
         if (i2c_writeReg(SLAVE_I2C_ADDRESS, I2C_REAL_MODS_START, (void *)&real_mods, sizeof(real_mods), TIMEOUT) >= 0) {
             i2c_buffer->real_mods = real_mods;
         }
@@ -140,6 +147,15 @@ bool transport_master(matrix_row_t master_matrix[], matrix_row_t slave_matrix[])
     }
 #        endif
 #    endif
+
+#   ifdef SPLIT_LAYERS_ENABLE
+
+    if (layer_state != i2c_buffer->layer_state) {
+        if (i2c_writeReg(SLAVE_I2C_ADDRESS, I2C_LAYER_STATE_START, (void *)&layer_state, sizeof(layer_state), TIMEOUT) >= 0) {
+            i2c_buffer->layer_state = layer_state;
+        }
+    }
+#   endif
 
 #    ifndef DISABLE_SYNC_TIMER
     i2c_buffer->sync_timer = sync_timer_read32() + SYNC_TIMER_OFFSET;
@@ -186,6 +202,10 @@ void transport_slave(matrix_row_t master_matrix[], matrix_row_t slave_matrix[]) 
     set_oneshot_mods(i2c_buffer->oneshot_mods);
 #        endif
 #    endif
+
+#    ifdef SPLIT_LAYERS_ENABLE
+    layer_state_set(i2c_buffer->layer_state);
+#    endif
 }
 
 void transport_master_init(void) { i2c_init(); }
@@ -225,6 +245,9 @@ typedef struct _Serial_m2s_buffer_t {
 #    endif
 #    ifdef WPM_ENABLE
     uint8_t      current_wpm;
+#    endif
+#    ifdef SPLIT_LAYERS_ENABLE
+    layer_state_t layer_state;
 #    endif
 } Serial_m2s_buffer_t;
 
@@ -343,6 +366,11 @@ bool transport_master(matrix_row_t master_matrix[], matrix_row_t slave_matrix[])
     serial_m2s_buffer.oneshot_mods = get_oneshot_mods();
 #        endif
 #    endif
+
+#    ifdef SPLIT_LAYERS_ENABLE
+    serial_m2s_buffer.layer_state = layer_state;
+#    endif
+
 #    ifndef DISABLE_SYNC_TIMER
     serial_m2s_buffer.sync_timer   = sync_timer_read32() + SYNC_TIMER_OFFSET;
 #    endif
@@ -381,6 +409,11 @@ void transport_slave(matrix_row_t master_matrix[], matrix_row_t slave_matrix[]) 
     set_oneshot_mods(serial_m2s_buffer.oneshot_mods);
 #        endif
 #    endif
+
+#    ifdef SPLIT_LAYERS_ENABLE
+    layer_state_set(serial_m2s_buffer.layer_state);
+#    endif
+
 }
 
 #endif
