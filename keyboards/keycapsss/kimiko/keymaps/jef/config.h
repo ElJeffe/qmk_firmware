@@ -45,6 +45,9 @@
 // #   define RGBLIGHT_EFFECT_ALTERNATING
 #endif
 
+#define SPLIT_MODS_ENABLE
+#define SPLIT_LAYERS_ENABLE
+
 // If you are using an Elite C rev3 on the slave side, uncomment the lines below:
 // #define SPLIT_USB_DETECT
 // #define NO_USB_STARTUP_CHECK
