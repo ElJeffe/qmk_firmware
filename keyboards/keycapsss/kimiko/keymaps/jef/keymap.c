@@ -316,23 +316,20 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
             // If the LOWER layer is active
             case _LAYER1:
+                // RGB brightness up/down
+                if (clockwise) {
+                    rgblight_decrease_val(); // tap_code(RGB_VAD);
+                } else {
+                    rgblight_increase_val(); // tap_code(RGB_VAI);
+                }
+                break;
+            // If the ADJUST layer is active
+            case _LAYER3:
                 // Volume up/down
                 if (clockwise) {
                     tap_code(KC_VOLU);
                 } else {
                     tap_code(KC_VOLD);
-                }
-                break;
-
-            // If the ADJUST layer is active
-            case _LAYER3:
-                // RGB hue up/down
-                if (clockwise) {
-                    // tap_code(RGB_HUI);
-                    rgblight_increase_hue();
-                } else {
-                    // tap_code(RGB_HUD);
-                    rgblight_decrease_hue();
                 }
                 break;
         }
