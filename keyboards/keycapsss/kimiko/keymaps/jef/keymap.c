@@ -19,29 +19,43 @@
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 
-#define _LAYER0 0
-#define _LAYER1 1
-#define _LAYER2 2
-#define _LAYER3 3
+#define _QWERTY 0
+#define _LOWER 1
+#define _RAISE 2
+#define _ADJUST 3
 
 enum custom_keycodes {
-    LAYER0 = SAFE_RANGE,
-    LAYER1,
-    LAYER2,
-    LAYER3,
+    TOGGLE_LED = SAFE_RANGE,
 };
 
  const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
- [_LAYER0] = LAYOUT(KC_ESC, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_BSLS, KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_MINS, KC_LSFT, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, KC_LCTL, KC_Z, KC_X, KC_C, KC_V, KC_B, MO(3), KC_ENT, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, RSFT_T(KC_ENT), KC_LGUI, KC_LALT, KC_LGUI, LT(1,KC_SPC), KC_SPC, KC_ENT, LT(2,KC_BSPC), KC_BSPC, KC_LBRC, KC_RBRC),
+ [_QWERTY] = LAYOUT(KC_ESC, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_BSLS, KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_MINS, KC_LSFT, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, KC_LCTL, KC_Z, KC_X, KC_C, KC_V, KC_B, MO(3), KC_ENT, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, RSFT_T(KC_ENT), KC_LGUI, KC_LALT, KC_LGUI, LT(1,KC_SPC), KC_SPC, KC_ENT, LT(2,KC_BSPC), KC_BSPC, KC_LBRC, KC_RBRC),
 
-[_LAYER1] = LAYOUT(KC_TILD, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_TRNS, LGUI(KC_F1), LGUI(KC_F2), LGUI(KC_F3), LGUI(KC_F4), LGUI(KC_F5), KC_PSCR, KC_7, KC_8, KC_9, KC_0, KC_F12, KC_TRNS, KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_PLUS, KC_PEQL, KC_TRNS, KC_TRNS, SGUI(KC_X), SGUI(KC_C), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_HOME, KC_PGDN, KC_PGUP, KC_END, KC_PMNS, KC_PLUS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_DEL, KC_NO, KC_NO),
+[_LOWER] = LAYOUT(KC_TILD, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_TRNS, LGUI(KC_F1), LGUI(KC_F2), LGUI(KC_F3), LGUI(KC_F4), LGUI(KC_F5), KC_PSCR, KC_7, KC_8, KC_9, KC_0, KC_F12, KC_TRNS, KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_PLUS, KC_PEQL, KC_TRNS, KC_TRNS, SGUI(KC_X), SGUI(KC_C), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_HOME, KC_PGDN, KC_PGUP, KC_END, KC_PMNS, KC_PLUS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_DEL, KC_NO, KC_NO),
 
-[_LAYER2] = LAYOUT(KC_TILD, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_TRNS, KC_TRNS, KC_PLUS, KC_MINS, KC_EQL, KC_LBRC, KC_RBRC, KC_BSLS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
+[_RAISE] = LAYOUT(KC_TILD, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_TRNS, KC_TRNS, KC_PLUS, KC_MINS, KC_EQL, KC_LBRC, KC_RBRC, KC_BSLS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
 
-[_LAYER3] = LAYOUT(RGB_M_P, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, KC_NO, KC_NO, KC_MPRV, KC_MPLY, KC_MNXT, KC_NO, KC_NO, KC_NO, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, KC_NO, KC_NO, KC_VOLU, KC_MUTE, KC_VOLD, KC_NO, KC_NO, KC_NO, RGB_RMOD, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_TRNS, KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS)
+[_ADJUST] = LAYOUT(TOGGLE_LED, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, KC_NO, KC_NO, KC_MPRV, KC_MPLY, KC_MNXT, KC_NO, KC_NO, KC_NO, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, KC_NO, KC_NO, KC_VOLU, KC_MUTE, KC_VOLD, KC_NO, KC_NO, KC_NO, RGB_RMOD, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_TRNS, KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS)
 
 };
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case TOGGLE_LED:
+      if (record->event.pressed) {
+#ifdef RGBLIGHT_ENABLE
+        rgblight_toggle_noeeprom();
+#endif
+        // Do something when pressed
+      } else {
+        // Do something else when release
+      }
+      return false; // Skip all further processing of this key
+    default:
+      return true; // Process all other keycodes normally
+  }
+}
 
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
@@ -226,11 +240,11 @@ void render_layer_state(void) {
         0x20, 0x9d, 0x9e, 0x9f, 0x20,
         0x20, 0xbd, 0xbe, 0xbf, 0x20,
         0x20, 0xdd, 0xde, 0xdf, 0x20, 0};
-    if(layer_state_is(_LAYER0)) {
+    if(layer_state_is(_QWERTY)) {
         oled_write_P(adjust_layer, false);
-    } else if(layer_state_is(_LAYER1)) {
+    } else if(layer_state_is(_LOWER)) {
         oled_write_P(lower_layer, false);
-    } else if(layer_state_is(_LAYER2)) {
+    } else if(layer_state_is(_RAISE)) {
         oled_write_P(raise_layer, false);
     } else {
         oled_write_P(default_layer, false);
@@ -255,85 +269,35 @@ void render_status_right(void) {
     render_rgb_info();
 }
 
-void oled_task_user(void) {
+bool oled_task_user(void) {
     if (is_keyboard_left()) {
         render_status_left();  // Renders the current keyboard state (layer, lock, caps, scroll, etc)
     } else {
         render_status_right();
     }
+    return false;
 }
 
 #endif
 
-
-#ifdef ENCODER_ENABLE
-bool encoder_update_user(uint8_t index, bool clockwise) {
-    // Encoder on master side
-    if (index == 0) {
-        switch (get_highest_layer(layer_state)) {
-            // If the Default (QWERTY) layer is active
-            case _LAYER0:
-                // Arrow Up/Down
-                if (clockwise) {
-                    tap_code(KC_DOWN);
-                } else {
-                    tap_code(KC_UP);
-                }
-                break;
-
-            // If the RAISE layer is active
-            case _LAYER2:
-                // Switch browser tabs
-                if (clockwise) {
-                    tap_code16(LCTL(KC_TAB));
-                } else {
-                    tap_code16(RCS(KC_TAB));
-                }
-                break;
-            // If the ADJUST layer is active
-            case _LAYER3:
-                // RGB brightness up/down
-                if (clockwise) {
-                    rgblight_decrease_val(); // tap_code(RGB_VAD);
-                } else {
-                    rgblight_increase_val(); // tap_code(RGB_VAI);
-                }
-                break;
-        }
-    }
-    // Encoder on slave side
-    else if (index == 1) {
-        switch (get_highest_layer(layer_state)) {
-            // If the Default (QWERTY) layer is active
-            case _LAYER0:
-                // Scroll by Word
-                if (clockwise) {
-                    tap_code16(LCTL(KC_RGHT));
-                } else {
-                    tap_code16(LCTL(KC_LEFT));
-                }
-                break;
-
-            // If the LOWER layer is active
-            case _LAYER1:
-                // RGB brightness up/down
-                if (clockwise) {
-                    rgblight_decrease_val(); // tap_code(RGB_VAD);
-                } else {
-                    rgblight_increase_val(); // tap_code(RGB_VAI);
-                }
-                break;
-            // If the ADJUST layer is active
-            case _LAYER3:
-                // Volume up/down
-                if (clockwise) {
-                    tap_code(KC_VOLU);
-                } else {
-                    tap_code(KC_VOLD);
-                }
-                break;
-        }
-    }
-    return true;
+void suspend_power_down_user(void) {
+#ifdef RGBLIGHT_ENABLE
+    rgblight_disable_noeeprom();
+#endif
+#    ifdef OLED_ENABLE
+    oled_off();
+#    endif
 }
-#endif // ENCODER_ENABLE
+
+void suspend_wakeup_init_user(void) {
+
+}
+
+#if defined(ENCODER_MAP_ENABLE)
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
+    [_QWERTY] = { ENCODER_CCW_CW(KC_UP, KC_DOWN),    ENCODER_CCW_CW(KC_UP, KC_DOWN)  },
+    [_LOWER] =  { ENCODER_CCW_CW(KC_TAB, RGB_HUI),   ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+    [_RAISE] =  { ENCODER_CCW_CW(RGB_VAD, RGB_VAI),  ENCODER_CCW_CW(RGB_HUI, RGB_HUD) },
+    [_ADJUST] = { ENCODER_CCW_CW(RGB_RMOD, RGB_MOD), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+};
+#endif // ENCODER_MAP_ENABLE
