@@ -280,18 +280,18 @@ bool oled_task_user(void) {
 
 #endif
 
-void suspend_power_down_user(void) {
-#ifdef RGBLIGHT_ENABLE
-    rgblight_disable_noeeprom();
-#endif
-#    ifdef OLED_ENABLE
-    oled_off();
-#    endif
-}
+// void suspend_power_down_user(void) {
+// #ifdef RGBLIGHT_ENABLE
+//     rgblight_disable_noeeprom();
+// #endif
+// #    ifdef OLED_ENABLE
+//     oled_off();
+// #    endif
+// }
 
-void suspend_wakeup_init_user(void) {
+// void suspend_wakeup_init_user(void) {
 
-}
+// }
 
 #if defined(ENCODER_MAP_ENABLE)
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
