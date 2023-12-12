@@ -44,7 +44,7 @@ enum custom_keycodes {
 
 [_LAYER2] = LAYOUT(KC_TILD, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_7, KC_8, KC_9, KC_MINS, KC_0, KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_4, KC_5, KC_6, KC_COMM, KC_NO, KC_NO, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_TRNS, KC_TRNS, KC_1, KC_2, KC_3, KC_DOT, KC_NO, KC_BSLS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, KC_0, KC_TRNS),
 
-[_LAYER3] = LAYOUT(KC_NO, KC_1, KC_2, KC_3, KC_4, KC_5, RGB_MOD, RGB_RMOD, KC_NO, KC_NO, RGB_MOD, RGB_RMOD, KC_NO, KC_TAB, KC_Q, KC_W, KC_E, KC_T, KC_NO, KC_NO, KC_NO, KC_NO, RGB_HUI, RGB_HUD, KC_NO, KC_LSFT, KC_A, KC_S, KC_D, KC_F, KC_NO, KC_NO, KC_NO, KC_NO, RGB_SAI, RGB_SAD, KC_NO, KC_LCTL, KC_Z, KC_X, KC_C, KC_V, TO(0), KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, RGB_VAI, RGB_VAD, KC_NO, KC_NO, KC_NO, KC_LCTL, KC_SPC, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO)
+[_LAYER3] = LAYOUT(KC_ESC, KC_1, KC_2, KC_3, KC_4, KC_5, RGB_MOD, RGB_RMOD, KC_NO, KC_NO, RGB_MOD, RGB_RMOD, KC_TAB, KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_NO, KC_NO, KC_NO, KC_NO, RGB_HUI, RGB_HUD, KC_LSFT, KC_LSFT, KC_A, KC_S, KC_D, KC_F, KC_NO, KC_NO, KC_NO, KC_NO, RGB_SAI, RGB_SAD, KC_LCTL, KC_LCTL, KC_Z, KC_X, KC_C, KC_V, TO(0), KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, RGB_VAI, RGB_VAD, KC_NO, KC_NO, KC_M, KC_Y, KC_SPC, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO)
 
 };
 ///////////////////////////////////////////////////////////
@@ -67,6 +67,54 @@ enum custom_keycodes {
 //       return true; // Process all other keycodes normally
 //   }
 // }
+
+#define LEANDER
+
+#ifdef RGBLIGHT_ENABLE
+#ifdef LEANDER
+
+#define AWSD HSV_RED
+#define ANDERE HSV_PURPLE
+
+
+const rgblight_segment_t PROGMEM gaming_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    // ROW 1
+     {0, 6, ANDERE},
+    // // ROW 2
+     {6, 3, ANDERE},
+     {9, 1, AWSD},
+     {10, 2, ANDERE},
+    // // ROW 3
+     {12, 1, ANDERE},
+     {13, 3, AWSD},
+     {16, 2, ANDERE},
+     // REST
+     {18, 40, ANDERE}
+);
+
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+    gaming_layer
+);
+
+void keyboard_post_init_user(void) {
+    // Enable the LED layers
+    rgblight_layers = my_rgb_layers;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    rgblight_set_layer_state(0, layer_state_cmp(state, _LAYER3));
+
+    // if (get_highest_layer(state) == _LAYER3) {
+    //     rgblight_setrgb (0x00,  0x00, 0xFF);
+    // }
+    // else {
+    //     rgblight_setrgb (0x00,  0xFF, 0x00);
+    // }
+
+    return state;
+}
+#endif
+#endif
 
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
@@ -275,7 +323,7 @@ void render_status_left(void) {
         oled_write("IIIII", false);
         oled_write("NNNNN", false);
         oled_write("GGGGG", false);
-
+        render_rgb_info();
     } else {
         render_space();
         render_logo();
